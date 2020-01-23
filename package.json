@@ -1,0 +1,37 @@
+{
+  "name": "air_conditioning",
+  "version": "1.0.0",
+  "description": "The project for air",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon ./bin/www"
+  },
+  "author": "MerzD",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.16.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
+    "express": "^4.17.1",
+    "express-session": "^1.16.2",
+    "express-validator": "^6.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.6.9",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.3.0",
+    "nodemon": "^1.19.1",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "popular-movie-quotes": "^1.2.3",
+    "swagger-ui-express": "^4.1.2",
+    "uuid": "^3.3.3",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "supertest": "^4.0.2"
+  }
+}

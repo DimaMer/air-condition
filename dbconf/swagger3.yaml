@@ -1,0 +1,401 @@
+swagger: "2.0"
+info:
+  title: Ecomerse Api
+  description: API.
+  version: 1.0.0
+host: localhost:3030
+#host: e-commerce-shop-back.herokuapp.com
+basePath: /api
+schemes:
+  - https
+  - http
+paths:
+  /info:
+    get:
+      tags:
+        - "mainInfo"
+      summary: Returns all mainInfo.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#'
+    post:
+      tags:
+        - "mainInfo"
+      summary: "Add mainInfo in the store with form data"
+      description: ""
+      operationId: "add"
+      consumes:
+        - form-data
+      produces:
+        - "form-data"
+      parameters:
+        - in: formData
+          name: name
+          type: string
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: about
+          type: string
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: address
+          type: string
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: phones
+          type: string
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: email
+          type: string
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: photo
+          type: file
+          required: true
+          description: The file to upload.
+      responses:
+        405:
+          description: "Invalid input"
+    delete:
+      tags:
+        - "mainInfo"
+      summary: "Deletes a mainInfo"
+      description: ""
+      operationId: "delete mainInfo"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "delete - mainInfo - id"
+          required: true
+          type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "gallery not found"
+  /client:
+    get:
+      tags:
+        - "client"
+      summary: Returns all client.
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: query
+          name: _id
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#'
+  /client/single:
+    get:
+#      deprecated: true
+      tags:
+        - "client"
+      summary: "Find single client"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "finditemByData"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "clientId"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#"
+        400:
+          description: "Invalid status value"
+    post:
+      tags:
+        - "client"
+      summary: "Add client in the store with form data"
+      description: ""
+      operationId: "updatePetWithForm"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "client object add"
+          required: true
+          schema:
+            $ref: "#/definitions/Client"
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+        - "client"
+      summary: "Updated client"
+      description: "This can only be done by the logged in client."
+      operationId: "updateclient"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "client"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "client object put"
+          required: true
+          schema:
+            $ref: "#/definitions/Client"
+      responses:
+        400:
+          description: "Invalid client supplied"
+        404:
+          description: "client not found"
+    delete:
+      tags:
+        - "client"
+      summary: "Deletes a client"
+      description: ""
+      operationId: "delete client"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "delete - client - id"
+          required: true
+          type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "client not found"
+
+
+  /admin/login:
+    post:
+      tags:
+        - "admin"
+      summary: login to site.
+      description: ""
+      operationId: "updatePetWithForm"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "email"
+          in: "formData"
+          description: "dima@gmail.com"
+          required: true
+          type: "string"
+        - name: "password"
+          in: "formData"
+          description: "1111"
+          required: true
+          type: "string"
+      responses:
+        405:
+          description: "Invalid input"
+  /admin/logout:
+    get:
+      tags:
+        - "admin"
+      summary: logout admin.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#'
+  /admin:
+    get:
+      tags:
+        - "admin"
+      summary: Returns all admin.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#'
+  /admin/single:
+    get:
+      tags:
+        - "admin"
+      summary: "Find single admin"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findAdminByData"
+      produces:
+        - "application/json"
+      #      parameters:
+      #        - name: "id"
+      #          in: "query"
+      #          description: "5dd66a92f3a23a1b4065fa2a"
+      #          required: true
+      #          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#"
+        400:
+          description: "Invalid status value"
+    post:
+      tags:
+        - "admin"
+      summary: "Add admin in the store with form data"
+      description: ""
+      operationId: "updatePetWithForm"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "firstName"
+          in: "formData"
+          description: "add name of the admin"
+          required: false
+          type: "string"
+        - name: "lastName"
+          in: "formData"
+          description: "add name of the admin"
+          required: false
+          type: "string"
+        - name: "email"
+          in: "formData"
+          description: "add email of the admin"
+          required: false
+          type: "string"
+        - name: "phone"
+          in: formData
+          description: "add email of the admin"
+          required: false
+          type: "string"
+        - name: "password"
+          in: "formData"
+          description: "add password of the admin"
+          required: false
+          type: "string"
+        - name: "role"
+          in: "formData"
+          description: "role"
+          required: false
+          type: "string"
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+        - "admin"
+      summary: "Updated admin"
+      description: "This can only be done by the logged in admin."
+      operationId: "updateAdmin"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "5dde41fd7ac7e72f14479b69"
+          required: true
+          type: "string"
+        - name: "firstName"
+          in: "formData"
+          description: "add name of the admin"
+          required: false
+          type: "string"
+        - name: "lastName"
+          in: "formData"
+          description: "add name of the admin"
+          required: false
+          type: "string"
+        - name: "email"
+          in: "formData"
+          description: "add email of the admin"
+          required: false
+          type: "string"
+        - name: "phone"
+          in: formData
+          description: "add email of the admin"
+          required: false
+          type: "string"
+        - name: "password"
+          in: "formData"
+          description: "add password of the admin"
+          required: false
+          type: "string"
+      responses:
+        400:
+          description: "Invalid admin supplied"
+        404:
+          description: "admin not found"
+    delete:
+      tags:
+        - "admin"
+      summary: "Deletes a admin"
+      description: ""
+      operationId: "deleteAdmin"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "delete - admin - id"
+          required: true
+          type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "admin not found"
+definitions:
+  Admin:
+    type: "object"
+    required:
+    properties:
+      lastName:
+        type: "string"
+      firstName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+  Client:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        required: true
+      phone:
+        type: "string"
+        required: true
+
+
+
+
+
+
