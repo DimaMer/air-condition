@@ -13,10 +13,10 @@ const router = express.Router();
 const {checkIfAuthenticated} = require('../helpers/authCheck');
 
 router.route('/service')
-  .get(  catchErrors(getServiceList));
+  .get(checkIfAuthenticated,  catchErrors(getServiceList));
 router.route('/service/single')
   .get(checkIfAuthenticated,   catchErrors(getSingleService) )
   .post(checkIfAuthenticated,   catchErrors(addService) )
-  .put(checkIfAuthenticated,   uploadNone, catchErrors(editService) )
+  .put(checkIfAuthenticated,    catchErrors(editService) )
   .delete(checkIfAuthenticated,  catchErrors(deleteService));
 module.exports = router;
