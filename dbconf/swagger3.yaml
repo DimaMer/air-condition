@@ -4,7 +4,7 @@ info:
   description: API.
   version: 1.0.0
 #host: localhost:3030
-host: https://air-condition.herokuapp.com
+host: air-condition.herokuapp.com
 basePath: /api
 schemes:
   - https
