@@ -5,10 +5,10 @@ const app = express();
 app.use(express.static(__dirname + '/public'));
 
 const cors = require('cors');
-const whitelist = ['http://localhost:3030','http://localhost:3000', 'https://air-condition.herokuapp.com/api/user/login','https://air-condition.herokuapp.com']
+const whitelist = ['http://localhost:3030','http://localhost:3000', 'https://air-condition.herokuapp.com/','https://air-condition.herokuapp.com']
 
 const corsOptions = {
-
+  credentials: true,
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
       callback(null, true)
@@ -17,7 +17,7 @@ const corsOptions = {
     }
   }
 }
-app.use(cors())
+app.use(cors(corsOptions));
 
 
 app.use(express.urlencoded({ extended: false }));
