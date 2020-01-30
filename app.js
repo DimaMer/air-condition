@@ -4,6 +4,21 @@ require('dotenv').config({path:'./variables.env'});
 const app = express();
 app.use(express.static(__dirname + '/public'));
 
+const cors = require('cors');
+const whitelist = ['http://localhost:3030','http://localhost:3000', 'https://air-condition.herokuapp.com/','https://air-condition.herokuapp.com/api-docs/']
+
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+app.use(cors(corsOptions));
+
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
