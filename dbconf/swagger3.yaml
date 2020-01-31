@@ -461,6 +461,129 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "admin not found"
+
+  /gallery:
+    get:
+      tags:
+        - "gallery"
+      summary: Returns all gallery.
+      parameters:
+        - name: "_id"
+          in: "query"
+          description: "gallery _Id"
+          type: "string"
+        - name: "description"
+          in: "query"
+          description: "gallery category"
+          type: "string"
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#'
+  /gallery/update:
+    post:
+      tags:
+        - "gallery"
+      summary: "update gallery in the store with form data"
+      description: ""
+      operationId: "updateGallery"
+      consumes:
+        - form-data
+      produces:
+        - "form-data"
+      parameters:
+        - in: formData
+          name: id
+          type: string
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: isActive
+          type: Boolean
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: photo
+          type: file
+          required: false
+          description: The file to upload.
+      responses:
+        405:
+          description: "Invalid input"
+  /gallery/single:
+    get:
+      deprecated: true
+      tags:
+        - "gallery"
+      summary: "Find single gallery"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "finditemByData"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "gallery Id"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#"
+        400:
+          description: "Invalid status value"
+    post:
+      tags:
+        - "gallery"
+      summary: "Add gallery in the store with form data"
+      description: ""
+      operationId: "updateGallery"
+      consumes:
+        - form-data
+      produces:
+        - "form-data"
+      parameters:
+        - in: formData
+          name: description
+          type: string
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: photo
+          type: file
+          required: true
+          description: The file to upload.
+      responses:
+        405:
+          description: "Invalid input"
+    delete:
+      tags:
+        - "gallery"
+      summary: "Deletes a gallery"
+      description: ""
+      operationId: "delete gallery"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "delete - gallery - id"
+          required: true
+          type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "gallery not found"
 definitions:
   Admin:
     type: "object"
