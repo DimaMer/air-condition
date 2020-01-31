@@ -1,6 +1,6 @@
 swagger: "2.0"
 info:
-  title: Ecomerse Api
+  title: Air-conditioner Api
   description: API.
   version: 1.0.0
 #host: localhost:3030

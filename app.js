@@ -31,7 +31,13 @@ app.use(session({
   cookie: {maxAge: 24 *60 *60 * 1000},
   httpOnly: true
 }));
-
+//
+// const graphqlHTTP = require('express-graphql')
+// const schema = require('./dbconf/schema.js')
+// app.use('/graphql', graphqlHTTP({
+//   schema: schema,
+//   graphiql: true
+// }))
 
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
