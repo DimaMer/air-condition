@@ -3,8 +3,8 @@ info:
   title: Air-conditioner Api
   description: API.
   version: 1.0.0
-host: localhost:3030
-#host: air-condition.herokuapp.com
+#host: localhost:3030
+host: air-condition.herokuapp.com
 basePath: /api
 schemes:
   - https
