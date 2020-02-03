@@ -193,7 +193,151 @@ paths:
           description: "client not found"
 
 
+  /item:
+    get:
+      tags:
+        - "item"
+      summary: Returns all item.
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: query
+          name: _id
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#'
+  /item/single:
+    get:
+      #      deprecated: true
+      tags:
+        - "item"
+      summary: "Find single item"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "finditemByData"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "itemId"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#"
+        400:
+          description: "Invalid status value"
+    post:
+      tags:
+        - "item"
+      summary: "Add item in the store with form data"
+      description: ""
+      operationId: "updatePetWithForm"
+      consumes:
+        - form-data
+      produces:
+        - "form-data"
+      parameters:
+        - in: formData
+          name: photo
+          type: file
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: subTitle
+          type: string
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: description
+          type: string
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: price
+          type: "integer"
+          format: "int32"
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: notes
+          type: string
+          required: false
+          description: Description of file contents.
+        - in: formData
+          name: isActive
+          type: boolean
+          required: false
+          description: Description of file contents.
 
+
+
+
+
+
+
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+        - "item"
+      summary: "Updated item"
+      description: "This can only be done by the logged in item."
+      operationId: "updateitem"
+      produces:
+        - "application/json"
+      consumes:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "item"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "item object put"
+          required: true
+          schema:
+            $ref: "#/definitions/Item"
+      responses:
+        400:
+          description: "Invalid item supplied"
+        404:
+          description: "item not found"
+    delete:
+      tags:
+        - "item"
+      summary: "Deletes a item"
+      description: ""
+      operationId: "delete item"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "id"
+          in: "query"
+          description: "delete - item - id"
+          required: true
+          type: "string"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "item not found"
 
 
   /service:
@@ -523,7 +667,7 @@ paths:
         - "gallery"
       summary: "Find single gallery"
       description: "Multiple status values can be provided with comma separated strings"
-      operationId: "finditemByData"
+      operationId: "findgalleryByData"
       produces:
         - "application/json"
       parameters:
@@ -606,6 +750,31 @@ definitions:
       phone:
         type: "string"
         required: true
+  Item:
+
+    type: "object"
+    properties:
+      title:
+        type: "string"
+        required: true
+      subTitle:
+        type: "string"
+        required: true
+      description:
+        type: "string"
+        required: true
+      price:
+        type: "integer"
+        format: "int32"
+        required: true
+      notes:
+        type: "string"
+        required: true
+      isActive:
+        type: "boolean"
+        required: true
+
+
   Service:
     type: "object"
     properties:

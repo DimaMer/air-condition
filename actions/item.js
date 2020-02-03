@@ -16,19 +16,20 @@ exports.getSingleItem = async (req, res) =>{
 }
 
 exports.addItem = async (req, res)=>{
-  if( !req.body.name || !req.body.phone ){
-    const err = new Error('Не всі дані введені!');
-    err.status = 404;
-    throw err;
-  }
 
-  let foundedItem = await Item.findOneAndUpdate({phone:req.body.phone},
+
+  let foundedItem = await Item.findOneAndUpdate({title:req.body.title},
                                                     req.body, {new: true});
+
+
   if( foundedItem ){
     return res.status(200).json(foundedItem);
   }
 
   const newItem = await new Item(req.body);
+  newItem.photo = req.files.photo.image.url
+
+
   if(!newItem){
     const err = new Error('Нового Item не додано!');
       err.status = 404;

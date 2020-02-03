@@ -7,10 +7,11 @@ const ItemSchema = new Schema({
     description: { type: String, required: true },
     photo: { type: String, required: true },
     price:  {type: Number, required: true },
-    notes: {type: Number, required: true },
+    notes: {type: String, required: true },
     isActive: {type: Boolean, required: true, default: false},
     date: { type: Date, required: true, default: Date.now },
 });
 const Item = mongoose.model('Item', ItemSchema);
 
 exports.Item = Item;
+
