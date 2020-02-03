@@ -34,6 +34,7 @@ exports.addGallery = async (req, res) => {
             err.status = 404;
             throw err;
         }
+    newGallery.photo = req.files.photo.image.url
         const createdGallery = await newGallery.save();
         res.status(200).json(createdGallery);
 
