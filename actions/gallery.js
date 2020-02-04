@@ -34,7 +34,7 @@ exports.addGallery = async (req, res) => {
             err.status = 404;
             throw err;
         }
-    newGallery.photo = req.files.photo.image.url
+    newGallery.photo = req.files.photo
         const createdGallery = await newGallery.save();
         res.status(200).json(createdGallery);
 
@@ -44,6 +44,7 @@ exports.editGallery = async (req, res) => {
     await validateData(req);
     const { id } = req.body;
     const photoFile = req.files.photo;
+
     const photoOld = await Gallery.find({_id: id})
     const editedGallery = await updateEntity(id, req, Gallery);
 

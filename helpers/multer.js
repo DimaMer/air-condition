@@ -32,10 +32,10 @@ exports.uploadCv = multer({ storage }).fields([
 exports.uploadNone = multer().none();
 
 exports.cloud = (req, res, next) => {
-  const path = req.files.photo[0].path;
+  let path =  (req.files&&req.files.photo)? req.files.photo[0].path: null;
   cloudinary.uploader.upload(path, function(image, err ) {
     if (err)return res.send(err);
-    req.files.photo.image=image
+    if (image.url) {req.files.photo=image.url}
     return next();
   })}
 

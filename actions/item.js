@@ -30,7 +30,7 @@ exports.addItem = async (req, res)=>{
   // }
 
   const newItem = await new Item(req.body);
-  newItem.photo = req.files.photo.image.url
+  newItem.photo = req.files.photo
 
 
   if(!newItem){
@@ -44,21 +44,22 @@ exports.addItem = async (req, res)=>{
 
 exports.editItem = async (req, res) => {
   await validateData(req);
-  const {id} = req.body;
-  const itemFile = req.files.photo;
-  const itemOld = await Item.find({_id: id})
+  const id = req.body.id;
   const editedItem = await updateEntity(id, req, Item);
+  if (req.files.photo) {
+    await unbindImageByAddress(editedItem.photo);
+  }
+  const photoFile = req.files.photo;
   if (!editedItem) {
-    if (itemFile) {
-      await unbindImageByAddress(itemFile[0].path || itemFile);
+    if (req.files.photo) {
+      await unbindImageByAddress(photoFile[0].path || photoFile);
     }
     const error = new Error('Помилка при виконанні оновлення!');
     error.status = 500;
     throw error;
-  } else if (itemFile&&itemOld[0]&&itemOld[0].photo) {
-    await unbindImageByAddress(itemOld[0].photo);
   }
   res.status(200).send('Success!');
+
 }
 
 exports.deleteItem = async (req, res) => {
