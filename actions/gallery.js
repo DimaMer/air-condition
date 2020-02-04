@@ -42,17 +42,12 @@ exports.addGallery = async (req, res) => {
 
 exports.editGallery = async (req, res) => {
     await validateData(req);
-    const id = req.body.id;
+    const { id } = req.body;
+    const photoFile = req.files.photo;
     const photoOld = await Gallery.find({_id: id})
     const editedGallery = await updateEntity(id, req, Gallery);
-    const photoNew = await Gallery.find({_id: id})
-    const photoFile = req.files.photo;
-    console.log(editedGallery.photo);
-    console.log('.'+photoOld[0].photo);
-    console.log(photoNew[0].photo);
-    if (req.files.photo) {
-        await unbindImageByAddress(photoOld[0].photo);
-    }
+
+
 
     if (!editedGallery) {
         if (req.files.photo) {
@@ -61,6 +56,8 @@ exports.editGallery = async (req, res) => {
         const error = new Error('Помилка при виконанні оновлення!');
         error.status = 500;
         throw error;
+    } else if (photoFile&&photoOld[0]&&photoOld[0].photo) {
+        await unbindImageByAddress(photoOld[0].photo);
     }
     res.status(200).send('Success!');
 }

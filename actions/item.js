@@ -1,4 +1,7 @@
 const { Item } = require('../models/Item');
+const {updateEntity} = require('../helpers/entityUpdater');
+const {validateData} = require('../helpers/dataValidator');
+const {unbindImageByAddress} = require('../helpers/unbindImages');
 
 exports.getItemList = async (req, res) =>{
     ItemList =  await Item.find();
@@ -18,13 +21,13 @@ exports.getSingleItem = async (req, res) =>{
 exports.addItem = async (req, res)=>{
 
 
-  let foundedItem = await Item.findOneAndUpdate({title:req.body.title},
-                                                    req.body, {new: true});
-
-
-  if( foundedItem ){
-    return res.status(200).json(foundedItem);
-  }
+  // let foundedItem = await Item.findOneAndUpdate({title:req.body.title},
+  //                                                   req.body, {new: true});
+  //
+  //
+  // if( foundedItem ){
+  //   return res.status(200).json(foundedItem);
+  // }
 
   const newItem = await new Item(req.body);
   newItem.photo = req.files.photo.image.url
@@ -40,16 +43,22 @@ exports.addItem = async (req, res)=>{
 }
 
 exports.editItem = async (req, res) => {
-  const id = req.query.id;
-  if(!id){
-    const error = new Error('Не вказаний id');
-    error.status(404);
+  await validateData(req);
+  const {id} = req.body;
+  const itemFile = req.files.photo;
+  const itemOld = await Item.find({_id: id})
+  const editedItem = await updateEntity(id, req, Item);
+  if (!editedItem) {
+    if (itemFile) {
+      await unbindImageByAddress(itemFile[0].path || itemFile);
+    }
+    const error = new Error('Помилка при виконанні оновлення!');
+    error.status = 500;
     throw error;
+  } else if (itemFile&&itemOld[0]&&itemOld[0].photo) {
+    await unbindImageByAddress(itemOld[0].photo);
   }
-  const updateObj = req.body;
-
-  const foundedItem = await Item.findByIdAndUpdate(id, updateObj, {new: true});
-  res.status(200).json(foundedItem);
+  res.status(200).send('Success!');
 }
 
 exports.deleteItem = async (req, res) => {

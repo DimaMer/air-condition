@@ -210,6 +210,54 @@ paths:
           description: OK
           schema:
             $ref: '#'
+  /item/update:
+    post:
+      tags:
+        - "itemUpdate"
+      summary: "update item in the store with form data"
+      description: ""
+      operationId: "updateItem"
+      consumes:
+        - form-data
+      produces:
+        - "form-data"
+      parameters:
+        - in: formData
+          name: id
+          type: string
+          required: true
+          description: The file to upload.
+        - in: formData
+          name: title
+          type: string
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: price
+          type: Boolean
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: notes
+          type: Boolean
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: isActive
+          type: Boolean
+          required: false
+          description: The file to upload.
+        - in: formData
+          name: photo
+          type: file
+          required: false
+          description: The file to upload.
+      responses:
+        405:
+          description: "Invalid input"
+
+
+
   /item/single:
     get:
       #      deprecated: true
@@ -283,42 +331,9 @@ paths:
           required: false
           description: Description of file contents.
 
-
-
-
-
-
-
       responses:
         405:
           description: "Invalid input"
-    put:
-      tags:
-        - "item"
-      summary: "Updated item"
-      description: "This can only be done by the logged in item."
-      operationId: "updateitem"
-      produces:
-        - "application/json"
-      consumes:
-        - "application/json"
-      parameters:
-        - name: "id"
-          in: "query"
-          description: "item"
-          required: true
-          type: "string"
-        - in: "body"
-          name: "body"
-          description: "item object put"
-          required: true
-          schema:
-            $ref: "#/definitions/Item"
-      responses:
-        400:
-          description: "Invalid item supplied"
-        404:
-          description: "item not found"
     delete:
       tags:
         - "item"

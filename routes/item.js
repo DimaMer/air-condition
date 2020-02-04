@@ -12,10 +12,12 @@ const {checkIfAuthenticated} = require('../helpers/authCheck');
 
 router.route('/item')
   .get(checkIfAuthenticated,  catchErrors(getItemList));
+router.route('/item/update')
+    .post(  upload,  cloud,  catchErrors(editItem) )
 router.route('/item/single')
   .get(checkIfAuthenticated,   catchErrors(getSingleItem) )
   .post(checkIfAuthenticated, upload,  cloud,  catchErrors(addItem) )
-  .put(checkIfAuthenticated,   uploadNone, catchErrors(editItem) )
+    //.put(checkIfAuthenticated,   uploadNone, catchErrors(editItem) )
   .delete(checkIfAuthenticated,  catchErrors(deleteItem));
 
 module.exports = router;
