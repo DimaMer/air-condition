@@ -4,7 +4,7 @@ const {validateData} = require('../helpers/dataValidator');
 const {unbindImageByAddress} = require('../helpers/unbindImages');
 
 exports.getItemList = async (req, res) =>{
-    ItemList =  await Item.find();
+    ItemList =  await Item.find().populate('category');
   res.status(200).json(ItemList);
 }
 
@@ -32,6 +32,13 @@ exports.addItem = async (req, res)=>{
   const newItem = await new Item(req.body);
   newItem.photo = req.files.photo
 
+  try {
+    newItem.category= JSON.parse(req.body.category);
+  } catch (e) {
+    newItem.category = req.body.category;
+  }
+
+
 
   if(!newItem){
     const err = new Error('Нового Item не додано!');
@@ -45,6 +52,13 @@ exports.addItem = async (req, res)=>{
 exports.editItem = async (req, res) => {
   await validateData(req);
   const id = req.body.id;
+
+  try {
+    req.body.category= JSON.parse(req.body.category);
+  } catch (e) {
+    req.body.category = req.body.category;
+  }
+
   const editedItem = await updateEntity(id, req, Item);
   if (req.files.photo) {
     await unbindImageByAddress(editedItem.photo);

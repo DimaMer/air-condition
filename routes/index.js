@@ -14,10 +14,13 @@ const mainInfo   = require('./mainInfo');
 //const vacancy    = require('./vacancy');
 //const call       = require('./call');
 //const candidate       = require('./candidate');
+const category    = require('./category');
+
 const app = express();
 app.use('/api', admin);
 //app.use('/api', employee);
 app.use('/api', client);
+app.use('/api', category);
 app.use('/api', item);
 //app.use('/api', feedback);
 app.use('/api', gallery);
