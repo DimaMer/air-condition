@@ -8,5 +8,6 @@ app.set('port', port);
 
 const server = http.createServer(app);
 server.listen(port, ()=>{
+  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
   console.log(`We are listening the port ${process.env.PORT}`);
 });
